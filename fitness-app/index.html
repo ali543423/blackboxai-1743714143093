@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Pro - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-dumbbell text-2xl"></i>
+                <span class="text-xl font-bold">Fitness Pro</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="hover:text-blue-200"><i class="fas fa-home mr-1"></i> Home</a>
+                <a href="exercise-library.html" class="hover:text-blue-200"><i class="fas fa-dumbbell mr-1"></i> Exercises</a>
+                <a href="workout-plans.html" class="hover:text-blue-200"><i class="fas fa-calendar-alt mr-1"></i> Plans</a>
+                <a href="progress-tracker.html" class="hover:text-blue-200"><i class="fas fa-chart-line mr-1"></i> Progress</a>
+                <a href="nutrition.html" class="hover:text-blue-200"><i class="fas fa-utensils mr-1"></i> Nutrition</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg">Sign In</a>
+                <button class="md:hidden" id="mobile-menu-button">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden hidden bg-blue-600 text-white" id="mobile-menu">
+        <div class="container mx-auto p-4 flex flex-col space-y-3">
+            <a href="index.html" class="hover:text-blue-200"><i class="fas fa-home mr-2"></i> Home</a>
+            <a href="exercise-library.html" class="hover:text-blue-200"><i class="fas fa-dumbbell mr-2"></i> Exercises</a>
+            <a href="workout-plans.html" class="hover:text-blue-200"><i class="fas fa-calendar-alt mr-2"></i> Plans</a>
+            <a href="progress-tracker.html" class="hover:text-blue-200"><i class="fas fa-chart-line mr-2"></i> Progress</a>
+            <a href="nutrition.html" class="hover:text-blue-200"><i class="fas fa-utensils mr-2"></i> Nutrition</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- User Stats Card -->
+            <div class="bg-white rounded-xl shadow-md p-6 md:col-span-1">
+                <div class="flex items-center space-x-4 mb-4">
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-user text-blue-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-semibold">Welcome Back!</h2>
+                        <p class="text-gray-500">Ready for your next workout?</p>
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-gray-500">Current Weight</p>
+                        <p class="text-2xl font-bold">75 kg</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">BMI</p>
+                        <p class="text-2xl font-bold">23.4</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-500">Workout Streak</p>
+                        <div class="flex items-center">
+                            <p class="text-2xl font-bold mr-2">5</p>
+                            <i class="fas fa-fire text-orange-500"></i>
+                        </div>
+                    </div>
+                </div>
+                <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg">
+                    Update Stats
+                </button>
+            </div>
+
+            <!-- Workout Progress -->
+            <div class="bg-white rounded-xl shadow-md p-6 md:col-span-2">
+                <h2 class="text-xl font-semibold mb-4">Workout Progress</h2>
+                <canvas id="progressChart" height="200"></canvas>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-xl shadow-md p-6 md:col-span-3">
+                <h2 class="text-xl font-semibold mb-4">Quick Actions</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <a href="workout-plans.html" class="bg-blue-50 hover:bg-blue-100 p-4 rounded-lg text-center">
+                        <div class="bg-blue-100 p-3 rounded-full inline-block mb-2">
+                            <i class="fas fa-plus text-blue-600"></i>
+                        </div>
+                        <p class="font-medium">New Workout</p>
+                    </a>
+                    <a href="exercise-library.html" class="bg-green-50 hover:bg-green-100 p-4 rounded-lg text-center">
+                        <div class="bg-green-100 p-3 rounded-full inline-block mb-2">
+                            <i class="fas fa-dumbbell text-green-600"></i>
+                        </div>
+                        <p class="font-medium">Browse Exercises</p>
+                    </a>
+                    <a href="progress-tracker.html" class="bg-purple-50 hover:bg-purple-100 p-4 rounded-lg text-center">
+                        <div class="bg-purple-100 p-3 rounded-full inline-block mb-2">
+                            <i class="fas fa-chart-line text-purple-600"></i>
+                        </div>
+                        <p class="font-medium">Track Progress</p>
+                    </a>
+                    <a href="nutrition.html" class="bg-orange-50 hover:bg-orange-100 p-4 rounded-lg text-center">
+                        <div class="bg-orange-100 p-3 rounded-full inline-block mb-2">
+                            <i class="fas fa-utensils text-orange-600"></i>
+                        </div>
+                        <p class="font-medium">Nutrition Plan</p>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Today's Workout -->
+            <div class="bg-white rounded-xl shadow-md p-6 md:col-span-2">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold">Today's Workout</h2>
+                    <button class="text-blue-600 hover:text-blue-800">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-blue-100 p-2 rounded-lg">
+                            <i class="fas fa-running text-blue-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-medium">Cardio Blast</h3>
+                            <p class="text-gray-500 text-sm">5 exercises • 45 minutes</p>
+                        </div>
+                        <button class="text-green-600 hover:text-green-800">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="flex items-start space-x-4">
+                        <div class="bg-purple-100 p-2 rounded-lg">
+                            <i class="fas fa-dumbbell text-purple-600"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-medium">Upper Body Strength</h3>
+                            <p class="text-gray-500 text-sm">8 exercises • 60 minutes</p>
+                        </div>
+                        <button class="text-green-600 hover:text-green-800">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+                <button class="mt-4 w-full border border-blue-600 text-blue-600 hover:bg-blue-50 py-2 rounded-lg">
+                    View All Workouts
+                </button>
+            </div>
+
+            <!-- Motivational Quote -->
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl shadow-md p-6 text-white md:col-span-1">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-quote-left text-2xl opacity-50 mr-2"></i>
+                    <h2 class="text-xl font-semibold">Daily Motivation</h2>
+                </div>
+                <p class="italic mb-4">"The only bad workout is the one that didn't happen."</p>
+                <p class="text-right">- Unknown</p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Progress chart
+        const ctx = document.getElementById('progressChart').getContext('2d');
+        const progressChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Workout Minutes',
+                    data: [30, 45, 40, 50, 60, 30, 0],
+                    borderColor: '#3B82F6',
+                    backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
