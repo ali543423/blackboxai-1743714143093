@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Pro - Nutrition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .nutrition-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .nutrition-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .food-item {
+            transition: background-color 0.2s ease;
+        }
+        .food-item:hover {
+            background-color: #f8fafc;
+        }
+        .macronutrient-bar {
+            height: 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation -->
+    <nav class="bg-blue-600 text-white p-4 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-dumbbell text-2xl"></i>
+                <span class="text-xl font-bold">Fitness Pro</span>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="index.html" class="hover:text-blue-200"><i class="fas fa-home mr-1"></i> Home</a>
+                <a href="exercise-library.html" class="hover:text-blue-200"><i class="fas fa-dumbbell mr-1"></i> Exercises</a>
+                <a href="workout-plans.html" class="hover:text-blue-200"><i class="fas fa-calendar-alt mr-1"></i> Plans</a>
+                <a href="progress-tracker.html" class="hover:text-blue-200"><i class="fas fa-chart-line mr-1"></i> Progress</a>
+                <a href="nutrition.html" class="font-semibold hover:text-blue-200"><i class="fas fa-utensils mr-1"></i> Nutrition</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="login.html" class="bg-blue-700 hover:bg-blue-800 px-4 py-2 rounded-lg">Sign In</a>
+                <button class="md:hidden" id="mobile-menu-button">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden hidden bg-blue-600 text-white" id="mobile-menu">
+        <div class="container mx-auto p-4 flex flex-col space-y-3">
+            <a href="index.html" class="hover:text-blue-200"><i class="fas fa-home mr-2"></i> Home</a>
+            <a href="exercise-library.html" class="hover:text-blue-200"><i class="fas fa-dumbbell mr-2"></i> Exercises</a>
+            <a href="workout-plans.html" class="hover:text-blue-200"><i class="fas fa-calendar-alt mr-2"></i> Plans</a>
+            <a href="progress-tracker.html" class="hover:text-blue-200"><i class="fas fa-chart-line mr-2"></i> Progress</a>
+            <a href="nutrition.html" class="font-semibold hover:text-blue-200"><i class="fas fa-utensils mr-2"></i> Nutrition</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 md:p-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6">
+            <h1 class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-0">Nutrition Tracker</h1>
+            <div class="flex space-x-3">
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center">
+                    <i class="fas fa-plus mr-2"></i> Add Food
+                </button>
+                <button class="bg-white border border-gray-300 hover:bg-gray-100 px-4 py-2 rounded-lg flex items-center">
+                    <i class="fas fa-cog mr-2"></i> Goals
+                </button>
+            </div>
+        </div>
+
+        <!-- Daily Summary -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div class="bg-white rounded-xl shadow-md p-6 nutrition-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500">Calories</p>
+                        <p class="text-2xl font-bold">1,850</p>
+                    </div>
+                    <div class="bg-red-100 p-3 rounded-full">
+                        <i class="fas fa-fire text-red-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <p class="text-sm text-gray-500">
+                        <span class="text-green-500">1,200</span> remaining
+                    </p>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                        <div class="bg-red-500 h-2 rounded-full" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6 nutrition-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500">Protein</p>
+                        <p class="text-2xl font-bold">120g</p>
+                    </div>
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-drumstick-bite text-blue-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <p class="text-sm text-gray-500">
+                        <span class="text-green-500">30g</span> remaining
+                    </p>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 80%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6 nutrition-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500">Carbs</p>
+                        <p class="text-2xl font-bold">210g</p>
+                    </div>
+                    <div class="bg-yellow-100 p-3 rounded-full">
+                        <i class="fas fa-bread-slice text-yellow-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <p class="text-sm text-gray-500">
+                        <span class="text-green-500">90g</span> remaining
+                    </p>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                        <div class="bg-yellow-500 h-2 rounded-full" style="width: 70%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-md p-6 nutrition-card">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500">Fats</p>
+                        <p class="text-2xl font-bold">65g</p>
+                    </div>
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <i class="fas fa-bacon text-green-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <p class="text-sm text-gray-500">
+                        <span class="text-green-500">15g</span> remaining
+                    </p>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 80%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Macronutrient Breakdown -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4">Macronutrient Distribution</h2>
+                <canvas id="macroChart" height="250"></canvas>
+            </div>
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4">Water Intake</h2>
+                <div class="flex flex-col items-center">
+                    <div class="relative w-48 h-48 mb-4">
+                        <svg class="w-full h-full" viewBox="0 0 100 100">
+                            <!-- Background circle -->
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#E5E7EB" stroke-width="8" />
+                            <!-- Progress circle -->
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="#3B82F6" stroke-width="8" 
+                                    stroke-dasharray="283" stroke-dashoffset="70" stroke-linecap="round" />
+                            <!-- Center text -->
+                            <text x="50" y="50" text-anchor="middle" dominant-baseline="middle" 
+                                  font-size="16" font-weight="bold" fill="#1F2937">3.2L</text>
+                            <text x="50" y="65" text-anchor="middle" dominant-baseline="middle" 
+                                  font-size="12" fill="#6B7280">of 4L goal</text>
+                        </svg>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button class="bg-blue-100 text-blue-600 p-2 rounded-full">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button class="bg-blue-600 text-white p-2 rounded-full">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Meal Sections -->
+        <div class="space-y-6">
+            <!-- Breakfast -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="bg-blue-50 px-6 py-3 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-gray-800">Breakfast</h2>
+                    <span class="text-sm text-gray-600">450 kcal</span>
+                </div>
+                <div class="p-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between food-item p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="bg-yellow-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-egg text-yellow-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Scrambled Eggs</h3>
+                                    <p class="text-xs text-gray-500">2 eggs, 1 tsp butter</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium">240 kcal</p>
+                                <p class="text-xs text-gray-500">20P • 15F • 2C</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between food-item p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-bread-slice text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Whole Wheat Toast</h3>
+                                    <p class="text-xs text-gray-500">1 slice</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium">120 kcal</p>
+                                <p class="text-xs text-gray-500">4P • 1F • 25C</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between food-item p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-apple-alt text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Apple</h3>
+                                    <p class="text-xs text-gray-500">1 medium</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium">90 kcal</p>
+                                <p class="text-xs text-gray-500">0P • 0F • 25C</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-3 w-full border border-dashed border-gray-300 text-gray-500 hover:border-blue-500 hover:text-blue-500 py-2 rounded-lg">
+                        <i class="fas fa-plus mr-1"></i> Add Food
+                    </button>
+                </div>
+            </div>
+
+            <!-- Lunch -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="bg-blue-50 px-6 py-3 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-gray-800">Lunch</h2>
+                    <span class="text-sm text-gray-600">720 kcal</span>
+                </div>
+                <div class="p-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between food-item p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="bg-red-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-drumstick-bite text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Grilled Chicken</h3>
+                                    <p class="text-xs text-gray-500">150g</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium">330 kcal</p>
+                                <p class="text-xs text-gray-500">62P • 7F • 0C</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between food-item p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-leaf text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Quinoa Salad</h3>
+                                    <p class="text-xs text-gray-500">1 cup</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium">220 kcal</p>
+                                <p class="text-xs text-gray-500">8P • 4F • 39C</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between food-item p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="bg-purple-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-carrot text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Mixed Vegetables</h3>
+                                    <p class="text-xs text-gray-500">1 cup</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium">170 kcal</p>
+                                <p class="text-xs text-gray-500">4P • 0F • 38C</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-3 w-full border border-dashed border-gray-300 text-gray-500 hover:border-blue-500 hover:text-blue-500 py-2 rounded-lg">
+                        <i class="fas fa-plus mr-1"></i> Add Food
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dinner -->
+            <div class="bg-white rounded-xl shadow-md overflow-hidden">
+                <div class="bg-blue-50 px-6 py-3 flex justify-between items-center">
+                    <h2 class="text-lg font-semibold text-gray-800">Dinner</h2>
+                    <span class="text-sm text-gray-600">680 kcal</span>
+                </div>
+                <div class="p-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between food-item p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-fish text-blue-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Salmon Fillet</h3>
+                                    <p class="text-xs text-gray-500">120g</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium">360 kcal</p>
+                                <p class="text-xs text-gray-500">34P • 24F • 0C</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between food-item p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="bg-yellow-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-potato text-yellow-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Sweet Potato</h3>
+                                    <p class="text-xs text-gray-500">1 medium</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium">180 kcal</p>
+                                <p class="text-xs text-gray-500">4P • 0F • 41C</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between food-item p-3 rounded-lg">
+                            <div class="flex items-center">
+                                <div class="bg-green-100 p-2 rounded-lg mr-3">
+                                    <i class="fas fa-seedling text-green-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium">Steamed Broccoli</h3>
+                                    <p class="text-xs text-gray-500">1 cup</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="font-medium">140 kcal</p>
+                                <p class="text-xs text-gray-500">5P • 0F • 28C</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="mt-3 w-full border border-dashed border-gray-300 text-gray-500 hover:border-blue-500 hover:text-blue-500 py-2 rounded-lg">
+                        <i class="fas fa-plus mr-1"></i> Add Food
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Macronutrient Chart
+        const macroCtx = document.getElementById('macroChart').getContext('2d');
+        const macroChart = new Chart(macroCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Protein', 'Carbs', 'Fats'],
+                datasets: [{
+                    data: [120, 210, 65],
+                    backgroundColor: [
+                        '#3B82F6',
+                        '#F59E0B',
+                        '#10B981'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percentage = Math.round((value / total) * 100);
+                                return `${label}: ${value}g (${percentage}%)`;
+                            }
+                        }
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+    </script>
+</body>
+</html>
